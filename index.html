@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asser Sedet - Personal Portfolio</title>
+    <style>
+        /* Reset and basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        /* Header/Navbar */
+        header {
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Adjusted for hamburger */
+            padding: 0.5rem 1rem;
+        }
+
+        header:hover {
+            background-color: #444;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            height: auto;
+            border-radius: 50%;
+            animation: rotateIn 1s ease-in; /* Animation for logo */
+            transition: transform 0.3s ease; /* Hover transition */
+        }
+
+        .logo img:hover {
+            transform: rotate(360deg); /* Full rotation on hover */
+        }
+
+        @keyframes rotateIn {
+            from { transform: rotate(0deg); opacity: 0; }
+            to { transform: rotate(360deg); opacity: 1; }
+        }
+
+        /* Menu list */
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+            color: #ffd700;
+            border-radius: 5px;
+        }
+
+        /* Hamburger button */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Active state for hamburger (close icon) */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Sections with animations */
+        section {
+            padding: 5rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #home {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        #about {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        #projects {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        #contact {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        h1, h2 {
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        h1:hover, h2:hover {
+            color: #ffd700;
+        }
+
+        p {
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Projects grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .project-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover h3 {
+            color: #007bff;
+        }
+
+        /* Profile Image */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            animation: bounceIn 1s ease-in; /* Load animation */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover transition */
+        }
+
+        .profile-img:hover {
+            transform: scale(1.1); /* Scale up on hover */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Glow effect */
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Social Media Links */
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-media a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-media a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Contact form */
+        form {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input, textarea {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            padding: 0.75rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header {
+                justify-content: space-between;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* Below header */
+                left: 0;
+                background-color: #333;
+                width: 100%;
+                padding: 1rem 0;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 1rem 0;
+            }
+
+            .social-media {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header/Navbar with Logo Image and Hamburger -->
+    <header>
+        <div class="logo">
+            <img src="aser.jpg" alt="Asser Sedet Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home">
+        <h1>Welcome to Asser Sedet's Portfolio</h1>
+    
+        <p>I'm Asser Sedet, a dedicated web developer passionate about creating responsive and beautiful websites. Explore my work and get in touch!</p>
+        <p>Additional info: I specialize in front-end technologies and have a keen interest in database management and programming languages.</p>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hi, I'm Asser Sedet. Email: assersedet4@gmail.com | Phone: 0951067247</p>
+        <p>I have experience in HTML, CSS, JavaScript, and various programming languages. I love building interactive web applications, managing databases, and learning new technologies.</p>
+        <p>My skills include responsive design, front-end development, problem-solving, and software engineering principles. Additional info: I'm based in Ethiopia and enjoy collaborating on innovative projects.</p>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>My Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>C++ Project</h3>
+                <p>A console-based application demonstrating object-oriented programming concepts in C++, such as classes, inheritance, and file handling.</p>
+                <a href="#">View Project</a>
+            </div>
+            <div class="project-card">
+                <h3>Fundamental Database</h3>
+                <p>A relational database system built with SQL, featuring schema design, queries, and basic CRUD operations for data management.</p>
+                <a href="#">View Project</a>
+            </div>
+            <div class="project-card">
+                <h3>Personal Portfolio</h3>
+                <p>This very website! A responsive personal portfolio showcasing my skills and projects using HTML, CSS, and JavaScript.</p>
+                <a href="#">View Project</a>
+            </div>
+            <div class="project-card">
+                <h3>Advanced Java</h3>
+                <p>An enterprise-level application using Java, including multithreading, GUI with Swing, and integration with databases via JDBC.</p>
+                <a href="#">View Project</a>
+            </div>
+        </div>
+        <p>Additional info: These projects highlight my versatility in programming and web development. Each one includes source code and documentation for further exploration.</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>Feel free to reach out for collaborations or questions!</p>
+        <p>Email: <a href="mailto:assersedet4@gmail.com">assersedet4@gmail.com</a> | Phone: <a href="tel:0951067247">0951067247</a></p>
+        <div class="social-media">
+            <a href="https://t.me/assersedet">Telegram</a>
+            <a href="imo:0951067247">IMO (via phone)</a> <!-- Replace with your actual IMO link or QR if available -->
+        </div>
+        <p>Additional info: I'm available for freelance work, consultations, or discussions on tech topics.</p>
+        <form id="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Asser Sedet</p>
+    </footer>
+
+    <script>
+        // Hamburger toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navUl = document.querySelector('nav ul');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navUl.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navbar links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Close menu on mobile after click
+                if (window.innerWidth <= 768) {
+                    hamburger.classList.remove('active');
+                    navUl.classList.remove('active');
+                }
+            });
+        });
+
+        // Basic form submission handling (for demo; in real use, connect to backend)
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent! (This is a demo)');
+            this.reset();
+        });
+
+        // Intersection Observer for section and card animations
+        const sections = document.querySelectorAll('section');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        projectCards.forEach(card => {
+            cardObserver.observe(card);
+        });
+    </script>
+
+</body>
+</html>
